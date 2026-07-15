@@ -8,12 +8,11 @@
 
 ## Checklist
 
-- [ ] `make ci` passes locally (lint, typecheck, tests, build)
+- [ ] Dashboard CI gate passes (`cd web-dashboard && make ci`)
 - [ ] Added/updated tests for the behavior change
-- [ ] Updated `README.md` / ADRs if this changes architecture or a
-      documented decision
-- [ ] Updated `CHANGELOG.md`
-- [ ] No new `console.log` — use `lib/logger.ts`
+- [ ] Updated root `README.md` / ADRs if this changes architecture
+- [ ] Updated `web-dashboard/CHANGELOG.md` when applicable
+- [ ] No new `console.log` — use `web-dashboard/lib/logger.ts`
 - [ ] Screenshots/GIF attached for visual changes
 
 ## Risk & rollback

@@ -1,0 +1,13 @@
+# Default owner for the monorepo.
+*                                   @ArchanaChetan07
+
+# Dashboard app + data contract.
+/web-dashboard/                     @ArchanaChetan07
+/web-dashboard/scripts/             @ArchanaChetan07
+/web-dashboard/analysis-source/     @ArchanaChetan07
+
+# Causal analysis pipeline.
+/python-analysis/                   @ArchanaChetan07
+
+# CI / infra.
+/.github/                           @ArchanaChetan07

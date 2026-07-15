@@ -6,7 +6,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](./web-dashboard)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](./web-dashboard)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](./web-dashboard/Dockerfile)
-[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](./web-dashboard/.github/workflows/ci.yml)
+[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](./.github/workflows/ci.yml)
 [![Tests](https://img.shields.io/badge/Jest-27%20passing-C21325?logo=jest&logoColor=white)](./web-dashboard/__tests__)
 [![Zod](https://img.shields.io/badge/Zod-validated%20data-3E67B1)](./web-dashboard/lib/schemas.ts)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](#)

@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in the dashboard is broken or wrong
+description: Something in the analysis pipeline or dashboard is broken or wrong
 labels: ["bug"]
 body:
   - type: textarea
@@ -7,6 +7,17 @@ body:
     attributes:
       label: What happened?
       description: What did you expect, and what did you see instead?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - "python-analysis"
+        - "web-dashboard"
+        - "docs / README"
+        - "CI / Docker"
     validations:
       required: true
   - type: textarea
@@ -28,6 +39,6 @@ body:
         - "Low — cosmetic"
         - "Medium — feature impaired"
         - "High — dashboard shows wrong numbers"
-        - "Critical — dashboard is down"
+        - "Critical — dashboard / CI is down"
     validations:
       required: true

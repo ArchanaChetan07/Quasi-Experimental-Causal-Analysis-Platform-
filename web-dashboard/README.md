@@ -17,8 +17,9 @@ the Python analysis outputs into an interactive, testable, deployable web app.
 - **Tests:** Jest + React Testing Library (unit/component + a11y) and Playwright
   (end-to-end smoke tests).
 - **Ops:** Makefile, multi-stage Dockerfile (standalone Next.js output, non-root
-  user, healthcheck, `prepare-data` during image build), GitHub Actions CI
-  (lint, typecheck, test, e2e, Docker smoke), and security headers (`next.config.mjs`).
+  user, healthcheck, `prepare-data` during image build), GitHub Actions CI at
+  repo root (lint, typecheck, test, e2e, Docker smoke), and security headers
+  (`next.config.mjs`).
 
 ## Quickstart
 
