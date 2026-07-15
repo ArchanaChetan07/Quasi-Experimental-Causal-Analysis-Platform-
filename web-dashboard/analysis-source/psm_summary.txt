@@ -1,0 +1,21 @@
+PROPENSITY SCORE MATCHING RESULTS
+
+Covariate balance BEFORE matching (standardized mean difference):
+    covariate  treated_mean  control_mean  std_mean_diff
+ pre_gmv_mean   9819.427823   8671.990369       0.378870
+pre_gmv_trend      0.005039      0.002447       1.104415
+  pre_gmv_vol      0.041741      0.030140       1.096880
+       pscore      0.691347      0.462961       1.202660
+
+Covariate balance AFTER matching (standardized mean difference):
+    covariate  treated_mean  matched_control_mean  std_mean_diff
+ pre_gmv_mean   9819.427823           9017.932396       0.262474
+pre_gmv_trend      0.005039              0.002646       1.026929
+  pre_gmv_vol      0.041741              0.030549       1.066470
+       pscore      0.691347              0.485006       1.108927
+
+ATT (post-period log GMV), 1:2 nearest-neighbor PS matching: 0.1102
+SE: 0.0765, 95%% CI: [-0.0396, 0.2601]
+Implied %% effect: 11.65%%
+
+Covariates with |SMD| > 0.10 (common balance threshold): 4 before matching, 4 after matching.

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.local
+.env*.local
+
+# Build / test artifacts
+.next/
+out/
+build/
+coverage/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+next-env.d.ts
+
+# Editor / OS
+.idea/
+.vscode/
+Thumbs.db
+
+# Large / local-only
+*.bundle
+.git-history.bundle

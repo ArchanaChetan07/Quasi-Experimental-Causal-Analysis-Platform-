@@ -1,0 +1,33 @@
+name: Bug report
+description: Something in the dashboard is broken or wrong
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you see instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: request-id
+    attributes:
+      label: Request ID (if applicable)
+      description: Found in the `X-Request-Id` response header or logs.
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "Low — cosmetic"
+        - "Medium — feature impaired"
+        - "High — dashboard shows wrong numbers"
+        - "Critical — dashboard is down"
+    validations:
+      required: true

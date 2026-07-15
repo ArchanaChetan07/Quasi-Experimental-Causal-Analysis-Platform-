@@ -1,0 +1,5 @@
+NAIVE TWFE DiD (biased under staggered adoption)
+ATT estimate (log points): 0.1452
+SE (clustered by market): 0.0234
+95% CI: [0.0992, 0.1911]
+Implied %% effect on GMV: 15.63%%
