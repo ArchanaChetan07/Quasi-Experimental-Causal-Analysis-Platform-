@@ -2,18 +2,18 @@
 
 ### Difference-in-Differences + Propensity Score Matching for staggered product rollouts — with a production Next.js decision dashboard
 
+[![CI](https://github.com/ArchanaChetan07/Quasi-Experimental-Causal-Analysis-Platform-/actions/workflows/ci.yml/badge.svg)](https://github.com/ArchanaChetan07/Quasi-Experimental-Causal-Analysis-Platform-/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](./python-analysis)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](./web-dashboard)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](./web-dashboard)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](./web-dashboard/Dockerfile)
-[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](./.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/Jest-27%20passing-C21325?logo=jest&logoColor=white)](./web-dashboard/__tests__)
+[![Tests](https://img.shields.io/badge/Jest%20%2B%20Playwright-passing-C21325?logo=jest&logoColor=white)](./web-dashboard/__tests__)
 [![Zod](https://img.shields.io/badge/Zod-validated%20data-3E67B1)](./web-dashboard/lib/schemas.ts)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](#)
 
 **Repo:** [ArchanaChetan07/Quasi-Experimental-Causal-Analysis-Platform-](https://github.com/ArchanaChetan07/Quasi-Experimental-Causal-Analysis-Platform-)
 
-> **ATS keywords:** Causal Inference · Quasi-Experimental Design · Difference-in-Differences (DiD) · Two-Way Fixed Effects (TWFE) · Event Study · Parallel Trends · Callaway–Sant’Anna style ATT · Not-Yet-Treated Controls · Propensity Score Matching (PSM) · Covariate Balance · Experimentation Platform · Product Analytics · A/B Testing Alternatives · Econometrics · Panel Data · Staggered Adoption · Python · pandas · NumPy · statsmodels · scikit-learn · Next.js · TypeScript · React · Recharts · Zod · Docker · CI/CD · Jest · Playwright · Accessibility
+> **ATS keywords:** Causal Inference · Quasi-Experimental Design · Difference-in-Differences (DiD) · Two-Way Fixed Effects (TWFE) · Event Study · Parallel Trends · Callaway–Sant’Anna style ATT · Not-Yet-Treated Controls · Propensity Score Matching (PSM) · Covariate Balance · Experimentation Platform · Product Analytics · A/B Testing Alternatives · Econometrics · Panel Data · Staggered Adoption · Python · pandas · NumPy · statsmodels · scikit-learn · Next.js · TypeScript · React · Recharts · Zod · Docker · CI/CD · GitHub Actions · Jest · Playwright · Accessibility
 
 ---
 
@@ -70,7 +70,7 @@ flowchart LR
 | **Causal engine** | Simulate staggered rollout, estimate ATTs, test assumptions | Python, pandas, NumPy, statsmodels, scikit-learn, matplotlib |
 | **Data contract** | Versioned analysis artifacts → single JSON bundle | Node `prepare-data`, Zod `resultsBundleSchema` |
 | **Product UI** | Decision-ready charts, tables, status badges | Next.js 15, React 18, TypeScript, Recharts |
-| **Ops** | Lint, typecheck, unit + e2e, container, health probes | Jest, Playwright, Docker, GitHub Actions |
+| **Ops** | Lint, typecheck, unit + e2e, container, health probes | Jest, Playwright, Docker, GitHub Actions (root CI) |
 
 ---
 
@@ -234,8 +234,8 @@ npm run build && npm start
 | **Experimentation & product analytics** | Staggered rollout design, GMV impact, decision-ready headline range |
 | **Data science tooling** | pandas, NumPy, statsmodels, scikit-learn, matplotlib |
 | **Full-stack engineering** | Next.js App Router, TypeScript, Zod, Recharts, SSR |
-| **Software quality** | Jest (27), Playwright e2e, ESLint, Prettier, typecheck |
-| **DevOps / production** | Docker multi-stage, GitHub Actions CI, health/metrics APIs, rate limiting, a11y |
+| **Software quality** | Jest (27), Playwright e2e, ESLint, Prettier, typecheck, green GitHub Actions CI |
+| **DevOps / production** | Docker multi-stage, root CI (lint/test/e2e/Docker smoke), health/metrics APIs, rate limiting, a11y |
 
 ---
 
