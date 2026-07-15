@@ -1,16 +1,19 @@
 # Quasi-Experimental Causal Analysis Platform
 
-### Production-grade Difference-in-Differences + Propensity Score Matching for staggered product rollouts
+### Difference-in-Differences + Propensity Score Matching for staggered product rollouts — with a production Next.js decision dashboard
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](./python-analysis)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](./web-dashboard)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](./web-dashboard)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](./web-dashboard/Dockerfile)
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](./web-dashboard/.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/Jest-26%20passing-C21325?logo=jest&logoColor=white)](./web-dashboard/__tests__)
+[![Tests](https://img.shields.io/badge/Jest-27%20passing-C21325?logo=jest&logoColor=white)](./web-dashboard/__tests__)
+[![Zod](https://img.shields.io/badge/Zod-validated%20data-3E67B1)](./web-dashboard/lib/schemas.ts)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](#)
 
-> **Keywords (ATS):** Causal Inference · Difference-in-Differences (DiD) · Two-Way Fixed Effects (TWFE) · Event Study · Parallel Trends · Callaway–Sant’Anna style ATT · Propensity Score Matching (PSM) · A/B Testing Alternatives · Experimentation Platform · Econometrics · Panel Data · Staggered Adoption · Next.js · TypeScript · React · Recharts · Python · pandas · statsmodels · scikit-learn · Docker · CI/CD · Observability · Accessibility
+**Repo:** [ArchanaChetan07/Quasi-Experimental-Causal-Analysis-Platform-](https://github.com/ArchanaChetan07/Quasi-Experimental-Causal-Analysis-Platform-)
+
+> **ATS keywords:** Causal Inference · Quasi-Experimental Design · Difference-in-Differences (DiD) · Two-Way Fixed Effects (TWFE) · Event Study · Parallel Trends · Callaway–Sant’Anna style ATT · Not-Yet-Treated Controls · Propensity Score Matching (PSM) · Covariate Balance · Experimentation Platform · Product Analytics · A/B Testing Alternatives · Econometrics · Panel Data · Staggered Adoption · Python · pandas · NumPy · statsmodels · scikit-learn · Next.js · TypeScript · React · Recharts · Zod · Docker · CI/CD · Jest · Playwright · Accessibility
 
 ---
 
@@ -59,7 +62,7 @@ flowchart LR
   end
 
   PY --> F --> G
-  I --> K["Docker · CI · a11y · rate limits"]
+  I --> K["Docker · CI · Zod · a11y · rate limits"]
 ```
 
 | Layer | Responsibility | Stack |
@@ -115,6 +118,8 @@ Violation concentrates in the **early** cohort; mid/late are more credible for c
 
 ### 4. ATT comparison: naive TWFE vs clean cohort estimates
 
+Heterogeneity-robust estimator compares each cohort to **not-yet-treated + never-treated** markets (simplified Callaway–Sant’Anna style).
+
 | Cohort | ATT (log pts) | 95% CI | Implied % GMV | Markets (T / C) |
 |---|---:|---|---:|---|
 | Early | 0.2011 | [0.179, 0.224] | **22.3%** | 8 / 32 |
@@ -129,7 +134,7 @@ Violation concentrates in the **early** cohort; mid/late are more credible for c
 
 ### 5. Propensity score matching (robustness)
 
-1:2 nearest-neighbor matching on pre-period covariates. Balance improves but remains above the |SMD| < 0.10 threshold — documenting **selection on observables** limits.
+1:2 nearest-neighbor matching on pre-period covariates (frequency-weighted balance). Balance improves but remains above the |SMD| < 0.10 threshold — documenting **selection on observables** limits.
 
 | Estimator | ATT | SE | 95% CI | Implied % |
 |---|---:|---:|---|---:|
@@ -174,13 +179,13 @@ Simulated DGP (for reproducibility): 40 markets, 104 weeks, true effect ≈ **+6
 
 ```
 ├── python-analysis/          # Causal statistics (source of truth)
-│   ├── code/                 # 01 simulate → 05 PSM plot
-│   ├── data/                 # panel + covariates
-│   ├── output/               # ATT, event study, balance CSVs/TXTs
-│   └── figures/              # publication-ready PNGs
+│   ├── code/                 # 01 simulate → 05 PSM plot (+ optional 06 report)
+│   ├── run_all.py            # One-command pipeline
+│   ├── requirements.txt
+│   ├── data/ · output/ · figures/
 ├── web-dashboard/            # Production Next.js app
 │   ├── analysis-source/      # copied Python outputs
-│   ├── data/results.json     # prepared API/UI bundle
+│   ├── data/results.json     # Zod-validated API/UI bundle
 │   ├── app/ · components/ · lib/
 │   ├── __tests__/ · e2e/
 │   └── Dockerfile · Makefile · CI
@@ -214,7 +219,7 @@ npm run dev          # http://localhost:3000
 ### 3) Production / CI
 
 ```bash
-npm test             # Jest unit/component tests
+npm test             # 27 Jest unit/component tests
 npm run build && npm start
 # or: make docker-build && make docker-run
 ```
@@ -225,11 +230,11 @@ npm run build && npm start
 
 | Domain | Evidence in this repo |
 |---|---|
-| **Causal inference / econometrics** | TWFE DiD, event studies, parallel-trends tests, cohort ATTs, PSM |
+| **Causal inference / econometrics** | TWFE DiD, event studies, parallel-trends tests, not-yet-treated cohort ATTs, PSM |
 | **Experimentation & product analytics** | Staggered rollout design, GMV impact, decision-ready headline range |
-| **Data science / ML tooling** | pandas, NumPy, statsmodels, scikit-learn, matplotlib |
+| **Data science tooling** | pandas, NumPy, statsmodels, scikit-learn, matplotlib |
 | **Full-stack engineering** | Next.js App Router, TypeScript, Zod, Recharts, SSR |
-| **Software quality** | Jest (26), Playwright e2e, ESLint, Prettier, typecheck |
+| **Software quality** | Jest (27), Playwright e2e, ESLint, Prettier, typecheck |
 | **DevOps / production** | Docker multi-stage, GitHub Actions CI, health/metrics APIs, rate limiting, a11y |
 
 ---
@@ -259,4 +264,4 @@ MIT — see repository for details.
 
 ### Topics / tags
 
-`causal-inference` `difference-in-differences` `propensity-score-matching` `event-study` `twfe` `staggered-adoption` `experimentation` `econometrics` `panel-data` `python` `pandas` `statsmodels` `nextjs` `typescript` `react` `recharts` `docker` `data-science` `product-analytics` `ab-testing`
+`causal-inference` `quasi-experimental` `difference-in-differences` `propensity-score-matching` `event-study` `twfe` `staggered-adoption` `experimentation` `econometrics` `panel-data` `python` `pandas` `statsmodels` `scikit-learn` `nextjs` `typescript` `react` `docker` `data-science` `product-analytics`
