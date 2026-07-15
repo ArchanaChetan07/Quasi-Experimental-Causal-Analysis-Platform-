@@ -168,3 +168,17 @@ caption {
     background-position: 0 50%;
   }
 }
+
+.psm-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .psm-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

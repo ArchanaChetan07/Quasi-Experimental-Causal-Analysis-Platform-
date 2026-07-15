@@ -13,10 +13,17 @@ export function SummaryCards({
   cohortAtt: ResultsBundle["cohortAtt"];
 }) {
   const midLate = cohortAtt.filter((c) => c.cohort !== "early");
+  const midLatePcts = midLate.map((c) => (Math.exp(c.att) - 1) * 100);
   const midLateAvgPct =
-    midLate.length > 0
-      ? midLate.reduce((sum, c) => sum + (Math.exp(c.att) - 1) * 100, 0) / midLate.length
+    midLatePcts.length > 0
+      ? midLatePcts.reduce((sum, x) => sum + x, 0) / midLatePcts.length
       : null;
+  const headlineLo = midLatePcts.length > 0 ? Math.min(...midLatePcts) : null;
+  const headlineHi = midLatePcts.length > 0 ? Math.max(...midLatePcts) : null;
+
+  const ptRejected = summary.parallelTrends.rejected;
+  const psmCiWidth = summary.psm.ci[1] - summary.psm.ci[0];
+  const psmWideCi = psmCiWidth > 0.2;
 
   return (
     <div
@@ -34,7 +41,11 @@ export function SummaryCards({
         </div>
         <div style={{ fontSize: 30, fontWeight: 700 }}>{pct(summary.twfe.impliedPct)}</div>
         <div style={{ marginTop: 10 }}>
-          <StatusBadge tone="danger">Parallel trends rejected (p = {summary.parallelTrends.pValue})</StatusBadge>
+          <StatusBadge tone={ptRejected ? "danger" : "ok"}>
+            {ptRejected
+              ? `Parallel trends rejected (p = ${summary.parallelTrends.pValue})`
+              : `Cannot reject parallel trends (p = ${summary.parallelTrends.pValue})`}
+          </StatusBadge>
         </div>
       </div>
 
@@ -56,7 +67,9 @@ export function SummaryCards({
         </div>
         <div style={{ fontSize: 30, fontWeight: 700 }}>{pct(summary.psm.impliedPct)}</div>
         <div style={{ marginTop: 10 }}>
-          <StatusBadge tone="warn">Wide CI, imperfect balance</StatusBadge>
+          <StatusBadge tone={psmWideCi ? "warn" : "ok"}>
+            {psmWideCi ? "Wide CI, imperfect balance" : "PSM robustness check"}
+          </StatusBadge>
         </div>
       </div>
 
@@ -64,7 +77,11 @@ export function SummaryCards({
         <div style={{ color: "var(--text-dim)", fontSize: 13, marginBottom: 6 }}>
           Recommended headline range
         </div>
-        <div style={{ fontSize: 24, fontWeight: 700 }}>+6% to +9%</div>
+        <div style={{ fontSize: 24, fontWeight: 700 }}>
+          {headlineLo !== null && headlineHi !== null
+            ? `${pct(headlineLo)} to ${pct(headlineHi)}`
+            : "n/a"}
+        </div>
         <div style={{ marginTop: 10 }}>
           <StatusBadge tone="ok">Based on mid/late cohorts</StatusBadge>
         </div>

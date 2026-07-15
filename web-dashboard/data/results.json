@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T20:48:39.513Z",
+  "generatedAt": "2026-07-15T21:49:01.781Z",
   "eventStudy": {
     "pooled": [
       {
@@ -685,21 +685,21 @@
   "cohortAtt": [
     {
       "cohort": "early",
-      "att": 0.20463565008202167,
-      "se": 0.011840262021416843,
-      "ci_low": 0.18142873652004465,
-      "ci_high": 0.22784256364399869,
+      "att": 0.20108093230096102,
+      "se": 0.011440510187070102,
+      "ci_low": 0.17865753233430362,
+      "ci_high": 0.22350433226761843,
       "n_treated_mkts": 8,
-      "n_control_mkts": 16
+      "n_control_mkts": 32
     },
     {
       "cohort": "mid",
-      "att": 0.08010368486923802,
-      "se": 0.006940466624076894,
-      "ci_low": 0.06650037028604731,
-      "ci_high": 0.09370699945242873,
+      "att": 0.07851001761474663,
+      "se": 0.0062663548675379365,
+      "ci_low": 0.06622796207437227,
+      "ci_high": 0.09079207315512099,
       "n_treated_mkts": 8,
-      "n_control_mkts": 16
+      "n_control_mkts": 24
     },
     {
       "cohort": "late",
@@ -742,26 +742,26 @@
       {
         "covariate": "pre_gmv_mean",
         "treated_mean": 9819.427823215134,
-        "matched_control_mean": 9017.932395655263,
-        "std_mean_diff": 0.2624740321429856
+        "matched_control_mean": 11299.059883642776,
+        "std_mean_diff": -0.45100171397670297
       },
       {
         "covariate": "pre_gmv_trend",
         "treated_mean": 0.0050385260123055175,
-        "matched_control_mean": 0.0026457592260471434,
-        "std_mean_diff": 1.0269293592954274
+        "matched_control_mean": 0.0033849404320871294,
+        "std_mean_diff": 0.7341316846749976
       },
       {
         "covariate": "pre_gmv_vol",
         "treated_mean": 0.04174070871611316,
-        "matched_control_mean": 0.0305486842248642,
-        "std_mean_diff": 1.0664697819789322
+        "matched_control_mean": 0.03210799210598719,
+        "std_mean_diff": 0.9249934159298931
       },
       {
         "covariate": "pscore",
         "treated_mean": 0.6913469841016436,
-        "matched_control_mean": 0.48500570636198004,
-        "std_mean_diff": 1.1089266638809658
+        "matched_control_mean": 0.5890448416967282,
+        "std_mean_diff": 0.5607834039880784
       }
     ],
     "matchedPairs": [

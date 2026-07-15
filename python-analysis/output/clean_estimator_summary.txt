@@ -1,9 +1,9 @@
 HETEROGENEITY-ROBUST (NOT-YET-TREATED COMPARISON) ATT BY COHORT
 
-early: ATT = 0.2046 (SE=0.0118), 95%% CI [0.1814, 0.2278]  (implied %%: 22.71%%)
-mid: ATT = 0.0801 (SE=0.0069), 95%% CI [0.0665, 0.0937]  (implied %%: 8.34%%)
-late: ATT = 0.0612 (SE=0.0096), 95%% CI [0.0423, 0.0801]  (implied %%: 6.31%%)
+early: ATT = 0.2011 (SE=0.0114), 95% CI [0.1787, 0.2235]  (implied %: 22.27%)
+mid: ATT = 0.0785 (SE=0.0063), 95% CI [0.0662, 0.0908]  (implied %: 8.17%)
+late: ATT = 0.0612 (SE=0.0096), 95% CI [0.0423, 0.0801]  (implied %: 6.31%)
 
-Equal-weighted average ATT across cohorts: 0.1153 (implied 12.22%%), approx SE=0.0056
+Equal-weighted average ATT across cohorts: 0.1136 (implied 12.03%), approx SE=0.0054
 
-For comparison, naive pooled TWFE ATT = 0.1452 (implied 15.63%%)
+For comparison, naive pooled TWFE ATT = 0.1452 (implied 15.63%)

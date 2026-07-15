@@ -6,19 +6,19 @@ the Python analysis outputs into an interactive, testable, deployable web app.
 
 ## What this is
 
-- **Frontend:** Next.js 14 (App Router) + TypeScript + Recharts, server-rendered
+- **Frontend:** Next.js 15 (App Router) + TypeScript + Recharts, server-rendered
   and statically generated at build time (no client-side data fetching waterfall).
 - **Data layer:** `data/results.json` is a pre-computed bundle generated from
   the upstream Python DiD/PSM analysis (`analysis-source/*.csv` + `*.txt`) via
-  `npm run prepare-data`. The app never re-runs statistics at request time —
-  it renders numbers that were already validated by the analysis pipeline.
-- **API:** `/api/results` (the data bundle) and `/api/health` (liveness probe),
-  both statically generated.
-- **Tests:** Jest + React Testing Library (unit/component, 17 tests, ~90%
-  statement coverage on components/lib) and Playwright (end-to-end smoke tests).
+  `npm run prepare-data`, then validated with Zod at load time. The app never
+  re-runs statistics at request time.
+- **API:** `/api/results` (rate-limited JSON bundle, `force-dynamic`) and
+  `/api/health` / `/api/metrics` (liveness / ops probes).
+- **Tests:** Jest + React Testing Library (unit/component + a11y) and Playwright
+  (end-to-end smoke tests).
 - **Ops:** Makefile, multi-stage Dockerfile (standalone Next.js output, non-root
-  user, healthcheck), GitHub Actions CI (lint, typecheck, test, e2e, Docker build),
-  and security headers (`next.config.mjs`).
+  user, healthcheck, `prepare-data` during image build), GitHub Actions CI
+  (lint, typecheck, test, e2e, Docker smoke), and security headers (`next.config.mjs`).
 
 ## Quickstart
 

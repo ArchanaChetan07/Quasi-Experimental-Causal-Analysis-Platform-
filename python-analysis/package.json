@@ -1,0 +1,11 @@
+{
+  "name": "causal-inference-report",
+  "private": true,
+  "description": "Builds Causal_Inference_Report.docx from analysis figures",
+  "dependencies": {
+    "docx": "^8.5.0"
+  },
+  "scripts": {
+    "build-report": "node code/06_build_report.js"
+  }
+}

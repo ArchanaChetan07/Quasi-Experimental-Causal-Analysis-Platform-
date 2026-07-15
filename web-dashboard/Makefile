@@ -5,22 +5,22 @@ help:
 	@echo "  make install       Install npm dependencies"
 	@echo "  make prepare-data  Regenerate data/results.json from analysis-source/"
 	@echo "  make dev           Run the Next.js dev server (http://localhost:3000)"
-	@echo "  make frontend      Alias for 'make dev' (build + start the frontend)"
+	@echo "  make frontend      Alias for 'make dev'"
 	@echo "  make build         Production build"
 	@echo "  make start         Start the production build (run 'make build' first)"
 	@echo "  make test          Run unit/component/a11y tests with coverage"
 	@echo "  make test-watch    Run unit tests in watch mode"
-	@echo "  make test-e2e      Run Playwright end-to-end tests"
+	@echo "  make test-e2e      Build then run Playwright end-to-end tests"
 	@echo "  make lint          Run ESLint"
 	@echo "  make typecheck     Run the TypeScript compiler in check-only mode"
 	@echo "  make format        Format code with Prettier"
 	@echo "  make format-check  Check formatting without writing changes"
 	@echo "  make audit         Run npm audit (fails on high/critical vulnerabilities)"
-	@echo "  make ci            Run the full CI gate: lint + typecheck + test + audit + build"
+	@echo "  make ci            Local CI gate: prepare-data + lint + typecheck + test + audit + build"
 	@echo "  make clean         Remove build artifacts and caches"
 	@echo "  make docker-build  Build the production Docker image"
 	@echo "  make docker-run    Run the production Docker image locally"
-	@echo "  make load-test     Run the k6 load test against a running instance"
+	@echo "  make load-test     Run the k6 load test against a running instance (requires k6)"
 
 install:
 	npm ci --no-audit --no-fund
@@ -33,7 +33,7 @@ dev: install
 
 frontend: dev
 
-build: install
+build: install prepare-data
 	npm run build
 
 start:
@@ -45,8 +45,9 @@ test: install
 test-watch: install
 	npm run test:watch
 
-test-e2e: install
+test-e2e: install prepare-data
 	npx playwright install --with-deps
+	npm run build
 	npm run test:e2e
 
 lint: install
@@ -65,13 +66,13 @@ audit:
 	npm audit --audit-level=high
 
 # Full gate a CI pipeline (or a pre-push hook) should run.
-ci: install lint typecheck test audit build
-	@echo "✅ CI gate passed: lint, typecheck, tests, audit, and build all succeeded."
+ci: install prepare-data lint typecheck test audit build
+	@echo "CI gate passed: prepare-data, lint, typecheck, tests, audit, and build all succeeded."
 
 clean:
-	rm -rf .next out node_modules coverage playwright-report test-results
+	node -e "const fs=require('fs');['.next','out','coverage','playwright-report','test-results'].forEach(p=>{try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}})"
 
-docker-build:
+docker-build: prepare-data
 	docker build -t causal-inference-dashboard:latest .
 
 docker-run: docker-build

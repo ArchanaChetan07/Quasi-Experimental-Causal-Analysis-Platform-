@@ -9,13 +9,13 @@ pre_gmv_trend      0.005039      0.002447       1.104415
 
 Covariate balance AFTER matching (standardized mean difference):
     covariate  treated_mean  matched_control_mean  std_mean_diff
- pre_gmv_mean   9819.427823           9017.932396       0.262474
-pre_gmv_trend      0.005039              0.002646       1.026929
-  pre_gmv_vol      0.041741              0.030549       1.066470
-       pscore      0.691347              0.485006       1.108927
+ pre_gmv_mean   9819.427823          11299.059884      -0.451002
+pre_gmv_trend      0.005039              0.003385       0.734132
+  pre_gmv_vol      0.041741              0.032108       0.924993
+       pscore      0.691347              0.589045       0.560783
 
 ATT (post-period log GMV), 1:2 nearest-neighbor PS matching: 0.1102
-SE: 0.0765, 95%% CI: [-0.0396, 0.2601]
-Implied %% effect: 11.65%%
+SE: 0.0765, 95% CI: [-0.0396, 0.2601]
+Implied % effect: 11.65%
 
 Covariates with |SMD| > 0.10 (common balance threshold): 4 before matching, 4 after matching.

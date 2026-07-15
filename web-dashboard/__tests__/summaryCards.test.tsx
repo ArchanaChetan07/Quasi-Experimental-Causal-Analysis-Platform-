@@ -35,9 +35,14 @@ describe("SummaryCards", () => {
     expect(screen.getByText("~+7.3%")).toBeInTheDocument();
   });
 
+  it("derives the recommended headline range from mid/late cohorts", () => {
+    render(<SummaryCards summary={summary} cohortAtt={cohortAtt} />);
+    expect(screen.getByText("+6.3% to +8.3%")).toBeInTheDocument();
+  });
+
   it("shows a fallback when no mid/late cohorts are present", () => {
     const earlyOnly = cohortAtt.filter((c) => c.cohort === "early");
     render(<SummaryCards summary={summary} cohortAtt={earlyOnly} />);
-    expect(screen.getByText("n/a")).toBeInTheDocument();
+    expect(screen.getAllByText("n/a").length).toBeGreaterThanOrEqual(1);
   });
 });

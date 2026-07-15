@@ -1,6 +1,8 @@
 import type { BalanceRow } from "@/lib/types";
 
 export function BalanceTable({ before, after }: { before: BalanceRow[]; after: BalanceRow[] }) {
+  const afterByCov = new Map(after.map((a) => [a.covariate, a]));
+
   return (
     <table>
       <caption>
@@ -16,8 +18,8 @@ export function BalanceTable({ before, after }: { before: BalanceRow[]; after: B
         </tr>
       </thead>
       <tbody>
-        {before.map((row, i) => {
-          const afterRow = after[i];
+        {before.map((row) => {
+          const afterRow = afterByCov.get(row.covariate);
           const afterSmd = afterRow?.std_mean_diff ?? null;
           const balanced = afterSmd !== null && Math.abs(afterSmd) < 0.1;
           return (

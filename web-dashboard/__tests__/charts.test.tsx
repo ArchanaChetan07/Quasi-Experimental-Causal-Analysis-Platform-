@@ -28,7 +28,9 @@ describe("chart components", () => {
   });
 
   it("CohortAttChart renders without throwing", () => {
-    expect(() => render(<CohortAttChart data={cohortAtt} twfeAtt={0.14} />)).not.toThrow();
+    expect(() =>
+      render(<CohortAttChart data={cohortAtt} twfeAtt={0.14} twfeCi={[0.1, 0.18]} />),
+    ).not.toThrow();
   });
 
   it("BalanceChart renders without throwing", () => {

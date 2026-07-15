@@ -23,7 +23,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
-import statsmodels.api as sm
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
@@ -47,7 +46,7 @@ with open(OUT / "twfe_result.txt", "w") as f:
     f.write(f"ATT estimate (log points): {twfe_att:.4f}\n")
     f.write(f"SE (clustered by market): {twfe_se:.4f}\n")
     f.write(f"95% CI: [{twfe_ci[0]:.4f}, {twfe_ci[1]:.4f}]\n")
-    f.write(f"Implied %% effect on GMV: {(np.exp(twfe_att)-1)*100:.2f}%%\n")
+    f.write(f"Implied % effect on GMV: {(np.exp(twfe_att)-1)*100:.2f}%\n")
 
 print("TWFE ATT:", twfe_att, "CI:", twfe_ci)
 
@@ -102,10 +101,10 @@ with open(OUT / "parallel_trends_test.txt", "w") as f:
     f.write(f"F-statistic: {fstat:.3f}\n")
     f.write(f"p-value: {pval:.4f}\n")
     if pval < 0.05:
-        f.write("=> REJECT parallel trends at 5%% level (pooled sample). "
+        f.write("=> REJECT parallel trends at 5% level (pooled sample). "
                 "Pre-trends are NOT flat - pooled naive DiD is suspect.\n")
     else:
-        f.write("=> Cannot reject parallel trends at 5%% level (pooled sample).\n")
+        f.write("=> Cannot reject parallel trends at 5% level (pooled sample).\n")
 
 print("Pooled pre-trend F-test p-value:", pval)
 
@@ -160,7 +159,11 @@ with open(OUT / "cohort_pretrend_pvalues.txt", "w") as f:
 # ---------------------------------------------------------------
 def clean_cohort_att(df, cohort, launch_week, post_window=20, pre_window=20):
     treat_mkts = df[df["cohort"] == cohort]["market"].unique()
-    ctrl_mkts = df[df["cohort"] == "never"]["market"].unique()
+    # Not-yet-treated controls: never-treated + cohorts that launch later
+    # (simplified Callaway–Sant'Anna style comparison group).
+    never = df["cohort"] == "never"
+    later = df["launch_week"].notna() & (df["launch_week"] > launch_week)
+    ctrl_mkts = df.loc[never | later, "market"].unique()
     pre = df[(df["week"] >= launch_week - pre_window) & (df["week"] < launch_week)]
     post = df[(df["week"] >= launch_week) & (df["week"] < launch_week + post_window)]
 
@@ -202,12 +205,12 @@ with open(OUT / "clean_estimator_summary.txt", "w") as f:
     f.write("HETEROGENEITY-ROBUST (NOT-YET-TREATED COMPARISON) ATT BY COHORT\n\n")
     for _, r in cs_df.iterrows():
         f.write(f"{r['cohort']}: ATT = {r['att']:.4f} (SE={r['se']:.4f}), "
-                f"95%% CI [{r['ci_low']:.4f}, {r['ci_high']:.4f}]  "
-                f"(implied %%: {(np.exp(r['att'])-1)*100:.2f}%%)\n")
+                f"95% CI [{r['ci_low']:.4f}, {r['ci_high']:.4f}]  "
+                f"(implied %: {(np.exp(r['att'])-1)*100:.2f}%)\n")
     f.write(f"\nEqual-weighted average ATT across cohorts: {overall_att:.4f} "
-            f"(implied {(np.exp(overall_att)-1)*100:.2f}%%), approx SE={overall_se:.4f}\n")
+            f"(implied {(np.exp(overall_att)-1)*100:.2f}%), approx SE={overall_se:.4f}\n")
     f.write(f"\nFor comparison, naive pooled TWFE ATT = {twfe_att:.4f} "
-            f"(implied {(np.exp(twfe_att)-1)*100:.2f}%%)\n")
+            f"(implied {(np.exp(twfe_att)-1)*100:.2f}%)\n")
 
 print("Clean cohort ATTs:\n", cs_df)
 print("Overall (equal-weighted) ATT:", overall_att, "vs naive TWFE:", twfe_att)

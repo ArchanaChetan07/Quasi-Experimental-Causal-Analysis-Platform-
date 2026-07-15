@@ -2,4 +2,4 @@ POOLED EVENT-STUDY PARALLEL TRENDS TEST
 Joint test that all pre-treatment lead coefficients = 0
 F-statistic: 5.101
 p-value: 0.0001
-=> REJECT parallel trends at 5%% level (pooled sample). Pre-trends are NOT flat - pooled naive DiD is suspect.
+=> REJECT parallel trends at 5% level (pooled sample). Pre-trends are NOT flat - pooled naive DiD is suspect.

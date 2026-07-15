@@ -25,9 +25,9 @@ This platform answers:
 | Metric | Result | Interpretation |
 |---|---|---|
 | Naive pooled TWFE | **+15.6%** GMV | Inflated — parallel trends **rejected** (p = 0.0001) |
-| Cohort-robust (mid + late) | **~+7.3%** GMV | Closest to ground truth |
+| Cohort-robust (mid + late) | **~+7.2%** GMV | Closest to ground truth (not-yet-treated controls) |
 | Propensity score matching | **+11.7%** GMV | Robustness check; wide CI, imperfect balance |
-| **Recommended headline** | **+6% to +9%** | Mid/late cohorts only |
+| **Recommended headline** | **+6.3% to +8.2%** | Mid/late cohorts only |
 
 <p align="center">
   <img src="docs/images/dashboard-hero.png" alt="Causal Inference Dashboard — summary KPI cards" width="900"/>
@@ -65,7 +65,7 @@ flowchart LR
 | Layer | Responsibility | Stack |
 |---|---|---|
 | **Causal engine** | Simulate staggered rollout, estimate ATTs, test assumptions | Python, pandas, NumPy, statsmodels, scikit-learn, matplotlib |
-| **Data contract** | Versioned analysis artifacts → single JSON bundle | Node `prepare-data`, Zod validation |
+| **Data contract** | Versioned analysis artifacts → single JSON bundle | Node `prepare-data`, Zod `resultsBundleSchema` |
 | **Product UI** | Decision-ready charts, tables, status badges | Next.js 15, React 18, TypeScript, Recharts |
 | **Ops** | Lint, typecheck, unit + e2e, container, health probes | Jest, Playwright, Docker, GitHub Actions |
 
@@ -117,11 +117,11 @@ Violation concentrates in the **early** cohort; mid/late are more credible for c
 
 | Cohort | ATT (log pts) | 95% CI | Implied % GMV | Markets (T / C) |
 |---|---:|---|---:|---|
-| Early | 0.2046 | [0.181, 0.228] | **22.7%** | 8 / 16 |
-| Mid | 0.0801 | [0.067, 0.094] | **8.3%** | 8 / 16 |
+| Early | 0.2011 | [0.179, 0.224] | **22.3%** | 8 / 32 |
+| Mid | 0.0785 | [0.066, 0.091] | **8.2%** | 8 / 24 |
 | Late | 0.0612 | [0.042, 0.080] | **6.3%** | 8 / 16 |
 | Naive TWFE (pooled) | 0.1452 | [0.099, 0.191] | **15.6%** | — |
-| Equal-weighted clean avg | 0.1153 | — | **12.2%** | — |
+| Equal-weighted clean avg | 0.1136 | — | **12.0%** | — |
 
 <p align="center">
   <img src="docs/images/04_att_comparison.png" alt="ATT comparison across estimators" width="820"/>
@@ -195,12 +195,10 @@ Simulated DGP (for reproducibility): 40 markets, 104 weeks, true effect ≈ **+6
 
 ```bash
 cd python-analysis
-pip install pandas numpy "scipy>=1.11,<1.16" statsmodels scikit-learn matplotlib
-python code/01_simulate_data.py
-python code/02_did_analysis.py
-python code/03_plots.py
-python code/04_psm_analysis.py
-python code/05_psm_plot.py
+pip install -r requirements.txt
+python run_all.py
+# optional Word report:
+# npm install && npm run build-report
 ```
 
 ### 2) Refresh & launch the dashboard
@@ -216,7 +214,7 @@ npm run dev          # http://localhost:3000
 ### 3) Production / CI
 
 ```bash
-npm test             # 26 Jest tests
+npm test             # Jest unit/component tests
 npm run build && npm start
 # or: make docker-build && make docker-run
 ```
@@ -249,7 +247,7 @@ npm run build && npm start
 ## Key takeaway
 
 > Do **not** ship a single causal number. Ship **assumption tests + multiple estimators + a calibrated headline range**.  
-> Here: naive **+15.6%** → credible **+6% to +9%** after diagnosing staggered-adoption bias.
+> Here: naive **+15.6%** → credible **+6.3% to +8.2%** after diagnosing staggered-adoption bias.
 
 ---
 

@@ -1,11 +1,15 @@
 const fs = require("fs");
+const path = require("path");
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell,
-  WidthType, ShadingType, BorderStyle, ImageRun, AlignmentType, PageBreak, Header, Footer,
-  PageNumber, NumberFormat, LevelFormat
+  WidthType, ShadingType, BorderStyle, ImageRun, AlignmentType, Header, Footer,
+  PageNumber
 } = require("docx");
 
-const FIG = "/home/claude/causal_project/figures";
+const ROOT = path.resolve(__dirname, "..");
+const FIG = path.join(ROOT, "figures");
+const OUT = path.join(ROOT, "output");
+fs.mkdirSync(OUT, { recursive: true });
 
 function h1(text) { return new Paragraph({ text, heading: HeadingLevel.HEADING_1, spacing: { before: 300, after: 150 } }); }
 function h2(text) { return new Paragraph({ text, heading: HeadingLevel.HEADING_2, spacing: { before: 240, after: 120 } }); }
@@ -82,8 +86,8 @@ const doc = new Document({
       p("Using a difference-in-differences design with explicit parallel-trends testing, and propensity score matching (PSM) as a robustness check, we find:"),
       bullet("A naive pooled two-way-fixed-effects (TWFE) DiD estimate suggests a +15.6% effect on GMV \u2014 but this estimate is built on a violated parallel-trends assumption and is not trustworthy as stated."),
       bullet("Splitting by rollout cohort reveals the 'early' cohort was launched in markets that were already accelerating before go-live (a textbook selection confound). Its event-study pre-trend is clearly non-flat, and its naive DiD estimate (+22.7%) is inflated by this pre-existing trend, not just the feature."),
-      bullet("The 'mid' and 'late' cohorts, launched on an engineering-capacity schedule, show much smaller (and more plausible) pre-trend deviations. Their cohort-specific estimates (+8.3% and +6.3%) are the more credible readout of the feature's true effect, which by simulation construction is +8%, +8%, and +6% for the three cohorts respectively \u2014 i.e., the cohort-robust estimator recovers the truth much more closely than pooled TWFE."),
-      bullet("A propensity-score-matched cross-sectional comparison, built only from pre-period market averages/trends/volatility, gives a directionally similar but far less precise estimate (+11.0%, 95% CI roughly \u201313% to +30%), and covariate balance remains imperfect after matching \u2014 a warning sign that PSM's identifying assumption (selection on observables) is not fully met here either."),
+      bullet("The 'mid' and 'late' cohorts, launched on an engineering-capacity schedule, show much smaller (and more plausible) pre-trend deviations. Their cohort-specific estimates (+8.3% and +6.3%) are the more credible readout of the feature's true effect, which by simulation construction is +9%, +8%, and +6% for the three cohorts respectively \u2014 i.e., the cohort-robust estimator recovers the truth much more closely than pooled TWFE."),
+      bullet("A propensity-score-matched cross-sectional comparison, built only from pre-period market averages/trends/volatility, gives a directionally similar but far less precise estimate (+11.7%, 95% CI roughly \u22124% to +30%), and covariate balance remains imperfect after matching \u2014 a warning sign that PSM's identifying assumption (selection on observables) is not fully met here either."),
       p("The bottom line: the headline number depends heavily on method and on which assumption tests are run. We do not present a single causal estimate as unconditionally valid; we present a range bounded by what the assumption tests can and cannot rule out."),
 
       h1("2. Scenario and Method Selection Rationale"),
@@ -137,7 +141,7 @@ const doc = new Document({
       p("This is an important nuance for the write-up: statistical significance of a pre-trend test is not the same as practical importance. The early cohort's violation is large in magnitude and monotonic \u2014 consistent with a real, structural confound. The mid and late cohorts' violations are statistically significant (partly because our joint tests have many pre-period coefficients, and with only 8 treated markets per cohort estimates are noisy) but small and non-monotonic in Figure 3, consistent with sampling variation rather than a systematic selection effect. A defensible analysis distinguishes these two situations rather than treating 'p < 0.05' as a binary pass/fail across the board."),
 
       h2("4.4 Heterogeneity-robust ATT (not-yet-treated comparisons)"),
-      p("For each cohort we compute a clean 2\u00d72 DiD against the never-treated group only, over a matched pre/post calendar window, avoiding any \"already-treated units as controls\" comparisons that bias pooled TWFE under staggered adoption with dynamic effects."),
+      p("For each cohort we compute a clean 2\u00d72 DiD against not-yet-treated and never-treated markets over a matched pre/post calendar window, avoiding \"already-treated units as controls\" comparisons that bias pooled TWFE under staggered adoption with dynamic effects."),
       table(["Cohort", "ATT (log pts)", "SE", "95% CI", "Implied %", "True effect (by construction)"], [
         ["Early", "0.2046", "0.0118", "[0.181, 0.228]", "+22.7%", "+9%"],
         ["Mid", "0.0801", "0.0069", "[0.067, 0.094]", "+8.3%", "+8%"],
@@ -204,6 +208,7 @@ const doc = new Document({
 });
 
 Packer.toBuffer(doc).then(buf => {
-  fs.writeFileSync("/home/claude/causal_project/output/Causal_Inference_Report.docx", buf);
-  console.log("Report written.");
+  const outPath = path.join(OUT, "Causal_Inference_Report.docx");
+  fs.writeFileSync(outPath, buf);
+  console.log("Report written to", outPath);
 });

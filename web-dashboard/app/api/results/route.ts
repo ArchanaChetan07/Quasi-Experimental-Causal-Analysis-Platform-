@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { getResults } from "@/lib/data";
 import { logger, generateRequestId } from "@/lib/logger";
-import { checkRateLimit, getClientKey } from "@/lib/rate-limit";
+import { checkRateLimit, getClientKey, startRateLimitCleanup } from "@/lib/rate-limit";
 import { resultsQuerySchema } from "@/lib/schemas";
+
+// Evict stale rate-limit buckets so the in-memory Map does not grow forever.
+startRateLimitCleanup();
 
 // Dynamic (not force-static) because rate limiting and query params require
 // per-request handling. The underlying data read is still a cheap, cached

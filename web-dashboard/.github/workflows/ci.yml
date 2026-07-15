@@ -79,5 +79,31 @@ jobs:
     needs: lint-test-build
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Regenerate data bundle
+        run: npm run prepare-data
+
       - name: Build Docker image
         run: docker build -t causal-inference-dashboard:ci .
+
+      - name: Smoke-test health endpoint
+        run: |
+          docker run -d --name dash -p 3000:3000 causal-inference-dashboard:ci
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/api/health; then
+              docker stop dash
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs dash
+          docker stop dash
+          exit 1

@@ -90,9 +90,10 @@ att_psm = matched_df["ind_att"].mean()
 se_psm = matched_df["ind_att"].std(ddof=1) / np.sqrt(len(matched_df))
 ci_psm = (att_psm - 1.96 * se_psm, att_psm + 1.96 * se_psm)
 
-# --- Covariate balance AFTER matching (using the matched control set, weighted) ---
-used_ctrl_idx = np.unique(matched_control_idx.flatten())
-matched_controls_full = control.iloc[used_ctrl_idx]
+# --- Covariate balance AFTER matching (frequency-weighted by match reuse) ---
+# Include each matched control as many times as it was selected so SMD
+# reflects the same (with-replacement) sample that produced the ATT.
+matched_controls_full = control.iloc[matched_control_idx.flatten()]
 
 balance_after = []
 for col in X_cols + ["pscore"]:
@@ -114,8 +115,8 @@ with open(OUT / "psm_summary.txt", "w") as f:
     f.write("\n\nCovariate balance AFTER matching (standardized mean difference):\n")
     f.write(balance_after_df.to_string(index=False))
     f.write(f"\n\nATT (post-period log GMV), 1:{K} nearest-neighbor PS matching: {att_psm:.4f}\n")
-    f.write(f"SE: {se_psm:.4f}, 95%% CI: [{ci_psm[0]:.4f}, {ci_psm[1]:.4f}]\n")
-    f.write(f"Implied %% effect: {(np.exp(att_psm)-1)*100:.2f}%%\n")
+    f.write(f"SE: {se_psm:.4f}, 95% CI: [{ci_psm[0]:.4f}, {ci_psm[1]:.4f}]\n")
+    f.write(f"Implied % effect: {(np.exp(att_psm)-1)*100:.2f}%\n")
     n_bad_before = (balance_before_df["std_mean_diff"].abs() > 0.1).sum()
     n_bad_after = (balance_after_df["std_mean_diff"].abs() > 0.1).sum()
     f.write(f"\nCovariates with |SMD| > 0.10 (common balance threshold): "
