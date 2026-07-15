@@ -18,6 +18,7 @@ test-results/
 *.log
 .DS_Store
 next-env.d.ts
+tsconfig.tsbuildinfo
 
 # Editor / OS
 .idea/
