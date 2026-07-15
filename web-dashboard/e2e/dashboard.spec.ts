@@ -19,9 +19,7 @@ test.describe("Causal inference dashboard", () => {
 
   test("renders the propensity score matching balance table", async ({ page }) => {
     await page.goto("/");
-    await expect(
-      page.getByRole("heading", { name: /Propensity score matching/i }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Propensity score matching/i })).toBeVisible();
     await expect(page.getByRole("cell", { name: "pre_gmv_mean" })).toBeVisible();
   });
 
