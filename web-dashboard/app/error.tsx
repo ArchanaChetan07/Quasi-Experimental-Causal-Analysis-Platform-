@@ -22,7 +22,12 @@ export default function GlobalError({
         <h1 style={{ fontSize: 22, marginBottom: 8 }}>Something went wrong</h1>
         <p style={{ color: "var(--text-dim)", marginBottom: 20 }}>
           The dashboard hit an unexpected error while rendering. This has been logged.
-          {error.digest && <> Reference: <code>{error.digest}</code></>}
+          {error.digest && (
+            <>
+              {" "}
+              Reference: <code>{error.digest}</code>
+            </>
+          )}
         </p>
         <button
           onClick={reset}

@@ -75,9 +75,7 @@ export const resultsBundleSchema = z.object({
       pValue: z.number(),
       rejected: z.boolean(),
     }),
-    cohortPretrendPValues: z
-      .array(z.object({ cohort: z.string(), pValue: z.number() }))
-      .min(1),
+    cohortPretrendPValues: z.array(z.object({ cohort: z.string(), pValue: z.number() })).min(1),
     psm: z.object({
       att: z.number(),
       se: z.number(),

@@ -8,12 +8,22 @@ const before = [
 
 const afterBalanced = [
   { covariate: "pre_gmv_mean", treated_mean: 100, matched_control_mean: 99, std_mean_diff: 0.05 },
-  { covariate: "pre_gmv_trend", treated_mean: 0.005, matched_control_mean: 0.0048, std_mean_diff: 0.08 },
+  {
+    covariate: "pre_gmv_trend",
+    treated_mean: 0.005,
+    matched_control_mean: 0.0048,
+    std_mean_diff: 0.08,
+  },
 ];
 
 const afterUnbalanced = [
   { covariate: "pre_gmv_mean", treated_mean: 100, matched_control_mean: 92, std_mean_diff: 0.26 },
-  { covariate: "pre_gmv_trend", treated_mean: 0.005, matched_control_mean: 0.0026, std_mean_diff: 1.03 },
+  {
+    covariate: "pre_gmv_trend",
+    treated_mean: 0.005,
+    matched_control_mean: 0.0026,
+    std_mean_diff: 1.03,
+  },
 ];
 
 describe("BalanceTable", () => {

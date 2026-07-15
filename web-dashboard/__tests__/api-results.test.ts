@@ -27,9 +27,7 @@ describe("GET /api/results", () => {
 
   it("attaches a request ID header for traceability", async () => {
     const res = await GET(makeRequest());
-    expect(res.headers.get("X-Request-Id")).toMatch(
-      /^[0-9a-f-]{36}$/,
-    );
+    expect(res.headers.get("X-Request-Id")).toMatch(/^[0-9a-f-]{36}$/);
   });
 
   it("returns only the requested cohort's event study when ?cohort= is set", async () => {

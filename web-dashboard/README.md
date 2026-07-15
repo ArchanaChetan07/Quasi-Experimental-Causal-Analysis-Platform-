@@ -39,20 +39,20 @@ npm run dev
 
 ## Common tasks
 
-| Task | Command |
-|---|---|
-| Dev server | `make dev` / `npm run dev` |
-| Production build | `make build` / `npm run build` |
-| Start production build | `make start` / `npm run start` |
-| Unit/component tests | `make test` / `npm test` |
-| Watch tests | `make test-watch` |
-| E2E tests (Playwright) | `make test-e2e` |
-| Lint | `make lint` / `npm run lint` |
-| Typecheck | `make typecheck` / `npm run typecheck` |
-| Format | `make format` |
-| **Full CI gate locally** | `make ci` |
-| Docker build | `make docker-build` |
-| Docker run | `make docker-run` |
+| Task                     | Command                                |
+| ------------------------ | -------------------------------------- |
+| Dev server               | `make dev` / `npm run dev`             |
+| Production build         | `make build` / `npm run build`         |
+| Start production build   | `make start` / `npm run start`         |
+| Unit/component tests     | `make test` / `npm test`               |
+| Watch tests              | `make test-watch`                      |
+| E2E tests (Playwright)   | `make test-e2e`                        |
+| Lint                     | `make lint` / `npm run lint`           |
+| Typecheck                | `make typecheck` / `npm run typecheck` |
+| Format                   | `make format`                          |
+| **Full CI gate locally** | `make ci`                              |
+| Docker build             | `make docker-build`                    |
+| Docker run               | `make docker-run`                      |
 
 `make ci` runs the exact same gate as GitHub Actions (`install → lint →
 typecheck → test → build`) so you can catch failures before pushing.
@@ -67,7 +67,7 @@ runtime. To refresh the dashboard after re-running the analysis:
    pipeline into `analysis-source/`.
 2. Run `npm run prepare-data` (or `make prepare-data`). This regenerates
    `data/results.json` and fails loudly (`Error: Missing expected analysis
-   output: ...`) if an expected file is missing, rather than silently
+output: ...`) if an expected file is missing, rather than silently
    serving stale or partial data.
 3. Commit the updated `data/results.json` — it's treated as a build input,
    not a runtime dependency, so the deployed app doesn't need Python at all.

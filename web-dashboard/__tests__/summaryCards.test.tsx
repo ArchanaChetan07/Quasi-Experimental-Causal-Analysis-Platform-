@@ -13,9 +13,33 @@ const summary = {
 };
 
 const cohortAtt = [
-  { cohort: "early" as const, att: 0.2046, se: 0.0118, ci_low: 0.1814, ci_high: 0.2278, n_treated_mkts: 8, n_control_mkts: 16 },
-  { cohort: "mid" as const, att: 0.0801, se: 0.0069, ci_low: 0.0665, ci_high: 0.0937, n_treated_mkts: 8, n_control_mkts: 16 },
-  { cohort: "late" as const, att: 0.0612, se: 0.0096, ci_low: 0.0423, ci_high: 0.0801, n_treated_mkts: 8, n_control_mkts: 16 },
+  {
+    cohort: "early" as const,
+    att: 0.2046,
+    se: 0.0118,
+    ci_low: 0.1814,
+    ci_high: 0.2278,
+    n_treated_mkts: 8,
+    n_control_mkts: 16,
+  },
+  {
+    cohort: "mid" as const,
+    att: 0.0801,
+    se: 0.0069,
+    ci_low: 0.0665,
+    ci_high: 0.0937,
+    n_treated_mkts: 8,
+    n_control_mkts: 16,
+  },
+  {
+    cohort: "late" as const,
+    att: 0.0612,
+    se: 0.0096,
+    ci_low: 0.0423,
+    ci_high: 0.0801,
+    n_treated_mkts: 8,
+    n_control_mkts: 16,
+  },
 ];
 
 describe("SummaryCards", () => {

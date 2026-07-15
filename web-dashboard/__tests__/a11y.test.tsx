@@ -44,7 +44,9 @@ describe("accessibility", () => {
   });
 
   it("StatusBadge has no detectable a11y violations", async () => {
-    const { container } = render(<StatusBadge tone="ok">Cannot reject parallel trends</StatusBadge>);
+    const { container } = render(
+      <StatusBadge tone="ok">Cannot reject parallel trends</StatusBadge>,
+    );
     expect(await axe(container)).toHaveNoViolations();
   });
 });

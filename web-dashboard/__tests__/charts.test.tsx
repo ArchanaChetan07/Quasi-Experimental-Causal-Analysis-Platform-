@@ -14,8 +14,24 @@ const eventData = [
 ];
 
 const cohortAtt = [
-  { cohort: "early" as const, att: 0.2, se: 0.01, ci_low: 0.18, ci_high: 0.22, n_treated_mkts: 8, n_control_mkts: 16 },
-  { cohort: "mid" as const, att: 0.08, se: 0.01, ci_low: 0.06, ci_high: 0.1, n_treated_mkts: 8, n_control_mkts: 16 },
+  {
+    cohort: "early" as const,
+    att: 0.2,
+    se: 0.01,
+    ci_low: 0.18,
+    ci_high: 0.22,
+    n_treated_mkts: 8,
+    n_control_mkts: 16,
+  },
+  {
+    cohort: "mid" as const,
+    att: 0.08,
+    se: 0.01,
+    ci_low: 0.06,
+    ci_high: 0.1,
+    n_treated_mkts: 8,
+    n_control_mkts: 16,
+  },
 ];
 
 const balance = [

@@ -24,13 +24,13 @@ export default function DashboardPage() {
             Causal Inference &middot; Staggered Rollout Analysis
           </div>
           <h1 style={{ fontSize: 32, margin: 0 }}>
-            Did the feature actually drive GMV &mdash; or did we just launch it in
-            markets that were already winning?
+            Did the feature actually drive GMV &mdash; or did we just launch it in markets that were
+            already winning?
           </h1>
           <p style={{ color: "var(--text-dim)", maxWidth: 760, marginTop: 12 }}>
-            Difference-in-differences and propensity-score-matching analysis of a
-            three-wave, non-randomized market rollout, with explicit assumption
-            testing rather than a single unconditional causal claim.
+            Difference-in-differences and propensity-score-matching analysis of a three-wave,
+            non-randomized market rollout, with explicit assumption testing rather than a single
+            unconditional causal claim.
           </p>
         </header>
 
@@ -41,20 +41,30 @@ export default function DashboardPage() {
           subtitle="Pooled event study: pre-period coefficients should be flat around zero if parallel trends holds. They are not."
         >
           <div className="card">
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: 12,
+                flexWrap: "wrap",
+                gap: 8,
+              }}
+            >
               <span style={{ color: "var(--text-dim)", fontSize: 14 }}>
                 Joint F-test on pre-treatment leads: F = {summary.parallelTrends.fStat}, p ={" "}
                 {summary.parallelTrends.pValue}
               </span>
               <StatusBadge tone={summary.parallelTrends.rejected ? "danger" : "ok"}>
-                {summary.parallelTrends.rejected ? "Parallel trends rejected" : "Cannot reject parallel trends"}
+                {summary.parallelTrends.rejected
+                  ? "Parallel trends rejected"
+                  : "Cannot reject parallel trends"}
               </StatusBadge>
             </div>
             <EventStudyChart data={eventStudy.pooled} color="#5b8cff" />
             <p className="sr-only">
-              Chart data: pre-treatment coefficients trend away from zero at longer lags,
-              indicating a parallel trends violation in the pooled sample. Exact values are
-              in event_study_pooled.csv / the prepared results JSON.
+              Chart data: pre-treatment coefficients trend away from zero at longer lags, indicating
+              a parallel trends violation in the pooled sample. Exact values are in
+              event_study_pooled.csv / the prepared results JSON.
             </p>
           </div>
         </Section>
@@ -75,7 +85,14 @@ export default function DashboardPage() {
               const pv = summary.cohortPretrendPValues.find((c) => c.cohort === cohort);
               return (
                 <div className="card" key={cohort}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginBottom: 8,
+                    }}
+                  >
                     <strong style={{ textTransform: "capitalize" }}>{cohort} cohort</strong>
                     {pv && (
                       <StatusBadge tone={toneForPValue(pv.pValue)}>
@@ -83,7 +100,11 @@ export default function DashboardPage() {
                       </StatusBadge>
                     )}
                   </div>
-                  <EventStudyChart data={eventStudy[cohort]} color={colorMap[cohort]} height={220} />
+                  <EventStudyChart
+                    data={eventStudy[cohort]}
+                    color={colorMap[cohort]}
+                    height={220}
+                  />
                   <p className="sr-only">
                     Event-study coefficients for the {cohort} cohort. Pre-trend joint p-value:{" "}
                     {pv?.pValue ?? "n/a"}.
@@ -153,8 +174,12 @@ export default function DashboardPage() {
             <div className="card">
               <BalanceTable before={psm.balanceBefore} after={psm.balanceAfter} />
               <div style={{ marginTop: 16, fontSize: 14, color: "var(--text-dim)" }}>
-                Matched ATT: <strong style={{ color: "var(--text)" }}>{summary.psm.impliedPct.toFixed(1)}%</strong>{" "}
-                (95% CI [{summary.psm.ci[0].toFixed(3)}, {summary.psm.ci[1].toFixed(3)}] in log points)
+                Matched ATT:{" "}
+                <strong style={{ color: "var(--text)" }}>
+                  {summary.psm.impliedPct.toFixed(1)}%
+                </strong>{" "}
+                (95% CI [{summary.psm.ci[0].toFixed(3)}, {summary.psm.ci[1].toFixed(3)}] in log
+                points)
               </div>
               <div style={{ marginTop: 12, fontSize: 13, color: "var(--text-dim)" }}>
                 Matched pairs: {psm.matchedPairs.length} treated markets (1:2 NN with replacement).
@@ -163,7 +188,15 @@ export default function DashboardPage() {
           </div>
         </Section>
 
-        <footer style={{ color: "var(--text-dim)", fontSize: 12, marginTop: 40, borderTop: "1px solid var(--border)", paddingTop: 16 }}>
+        <footer
+          style={{
+            color: "var(--text-dim)",
+            fontSize: 12,
+            marginTop: 40,
+            borderTop: "1px solid var(--border)",
+            paddingTop: 16,
+          }}
+        >
           Results generated {new Date(results.generatedAt).toLocaleString()}. Data pipeline:{" "}
           <code>npm run prepare-data</code> from the upstream Python DiD/PSM analysis.
         </footer>

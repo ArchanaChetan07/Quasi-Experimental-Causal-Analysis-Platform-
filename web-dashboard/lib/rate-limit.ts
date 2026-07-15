@@ -42,7 +42,11 @@ export function checkRateLimit(
 
   bucket.count += 1;
   const allowed = bucket.count <= max;
-  return { allowed, remaining: Math.max(0, max - bucket.count), resetAt: bucket.windowStart + windowMs };
+  return {
+    allowed,
+    remaining: Math.max(0, max - bucket.count),
+    resetAt: bucket.windowStart + windowMs,
+  };
 }
 
 /** Periodically evict stale buckets so this doesn't leak memory long-run. */

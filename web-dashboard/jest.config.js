@@ -10,11 +10,7 @@ const customJestConfig = {
     "^@/(.*)$": "<rootDir>/$1",
   },
   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/e2e/"],
-  collectCoverageFrom: [
-    "components/**/*.{ts,tsx}",
-    "lib/**/*.{ts,tsx}",
-    "!**/*.d.ts",
-  ],
+  collectCoverageFrom: ["components/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}", "!**/*.d.ts"],
   coverageThreshold: {
     global: {
       lines: 60,

@@ -7,6 +7,7 @@ All notable changes to this project are documented here. Format follows
 ## [1.1.0] - 2026-07-14
 
 ### Added
+
 - Structured JSON logging (`lib/logger.ts`, pino) with per-request child
   loggers and a request ID propagated via `X-Request-Id`.
 - Rate limiting on `/api/results` (`lib/rate-limit.ts`), with `429` +
@@ -27,6 +28,7 @@ All notable changes to this project are documented here. Format follows
 - CI: `npm audit`, a11y test run added to the test job.
 
 ### Changed
+
 - `/api/results` is now `force-dynamic` (was `force-static`) to support
   rate limiting and query params; the main dashboard page itself remains
   statically generated.
@@ -34,6 +36,7 @@ All notable changes to this project are documented here. Format follows
 ## [1.0.0] - 2026-07-14
 
 ### Added
+
 - Initial dashboard: event study charts, cohort ATT comparison, PSM balance
   table/chart, summary cards.
 - Data pipeline (`scripts/prepare-data.mjs`) converting Python analysis

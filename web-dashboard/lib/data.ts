@@ -18,9 +18,7 @@ export function getResults(): ResultsBundle {
 
   const filePath = path.join(process.cwd(), "data", "results.json");
   if (!fs.existsSync(filePath)) {
-    throw new Error(
-      "data/results.json not found. Run `npm run prepare-data` first (see README).",
-    );
+    throw new Error("data/results.json not found. Run `npm run prepare-data` first (see README).");
   }
   const raw = fs.readFileSync(filePath, "utf-8");
   const parsed = resultsBundleSchema.safeParse(JSON.parse(raw));

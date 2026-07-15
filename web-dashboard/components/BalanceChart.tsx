@@ -13,27 +13,26 @@ import {
 } from "recharts";
 import type { BalanceRow } from "@/lib/types";
 
-export function BalanceChart({
-  before,
-  after,
-}: {
-  before: BalanceRow[];
-  after: BalanceRow[];
-}) {
+export function BalanceChart({ before, after }: { before: BalanceRow[]; after: BalanceRow[] }) {
   const afterByCov = new Map(after.map((a) => [a.covariate, a]));
   const covariates = before.map((b) => b.covariate);
   const beforePoints = before.map((b, i) => ({ x: b.std_mean_diff, y: i, covariate: b.covariate }));
-  const afterPoints = before.map((b, i) => {
-    const a = afterByCov.get(b.covariate);
-    return { x: a?.std_mean_diff ?? null, y: i, covariate: b.covariate };
-  }).filter((p): p is { x: number; y: number; covariate: string } => p.x !== null);
+  const afterPoints = before
+    .map((b, i) => {
+      const a = afterByCov.get(b.covariate);
+      return { x: a?.std_mean_diff ?? null, y: i, covariate: b.covariate };
+    })
+    .filter((p): p is { x: number; y: number; covariate: string } => p.x !== null);
 
   const allX = [...beforePoints.map((p) => p.x), ...afterPoints.map((p) => p.x)];
   const xMin = Math.min(-0.2, ...allX, -0.1) - 0.05;
   const xMax = Math.max(1.4, ...allX, 0.1) + 0.05;
 
   return (
-    <div style={{ width: "100%", minWidth: 0, height: 260, minHeight: 260 }} data-testid="balance-chart">
+    <div
+      style={{ width: "100%", minWidth: 0, height: 260, minHeight: 260 }}
+      data-testid="balance-chart"
+    >
       <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={260}>
         <ScatterChart margin={{ top: 10, right: 20, bottom: 5, left: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#253150" />
@@ -43,7 +42,12 @@ export function BalanceChart({
             stroke="#9aa7c2"
             tick={{ fontSize: 12 }}
             domain={[xMin, xMax]}
-            label={{ value: "Standardized mean difference", position: "bottom", fill: "#9aa7c2", fontSize: 12 }}
+            label={{
+              value: "Standardized mean difference",
+              position: "bottom",
+              fill: "#9aa7c2",
+              fontSize: 12,
+            }}
           />
           <YAxis
             type="number"

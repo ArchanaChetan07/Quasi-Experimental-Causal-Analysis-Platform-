@@ -90,7 +90,10 @@ const twfe = {
   ),
 };
 
-const pValue = requireNumber(matchNumber(ptText, /p-value:\s*(-?\d+\.?\d*)/), "parallelTrends.pValue");
+const pValue = requireNumber(
+  matchNumber(ptText, /p-value:\s*(-?\d+\.?\d*)/),
+  "parallelTrends.pValue",
+);
 
 const cohortPretrendPValues = pretrendText
   .trim()
@@ -123,7 +126,10 @@ const bundle = {
   summary: {
     twfe,
     parallelTrends: {
-      fStat: requireNumber(matchNumber(ptText, /F-statistic:\s*(-?\d+\.?\d*)/), "parallelTrends.fStat"),
+      fStat: requireNumber(
+        matchNumber(ptText, /F-statistic:\s*(-?\d+\.?\d*)/),
+        "parallelTrends.fStat",
+      ),
       pValue,
       rejected: ptText.includes("REJECT") || pValue < 0.05,
     },

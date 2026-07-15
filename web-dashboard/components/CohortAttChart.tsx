@@ -46,7 +46,10 @@ export function CohortAttChart({
   ];
 
   return (
-    <div style={{ width: "100%", minWidth: 0, height: 280, minHeight: 280 }} data-testid="cohort-att-chart">
+    <div
+      style={{ width: "100%", minWidth: 0, height: 280, minHeight: 280 }}
+      data-testid="cohort-att-chart"
+    >
       <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={280}>
         <BarChart data={chartData} margin={{ top: 10, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#253150" />

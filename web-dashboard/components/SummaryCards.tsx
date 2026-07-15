@@ -15,9 +15,7 @@ export function SummaryCards({
   const midLate = cohortAtt.filter((c) => c.cohort !== "early");
   const midLatePcts = midLate.map((c) => (Math.exp(c.att) - 1) * 100);
   const midLateAvgPct =
-    midLatePcts.length > 0
-      ? midLatePcts.reduce((sum, x) => sum + x, 0) / midLatePcts.length
-      : null;
+    midLatePcts.length > 0 ? midLatePcts.reduce((sum, x) => sum + x, 0) / midLatePcts.length : null;
   const headlineLo = midLatePcts.length > 0 ? Math.min(...midLatePcts) : null;
   const headlineHi = midLatePcts.length > 0 ? Math.max(...midLatePcts) : null;
 

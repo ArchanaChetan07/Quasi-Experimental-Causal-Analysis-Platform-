@@ -22,7 +22,7 @@ does **not** coordinate across multiple server instances.
 - **Redis-backed rate limiting (e.g. `@upstash/ratelimit`)** — the correct
   choice once the app runs on more than one instance behind a load balancer,
   since in-memory counters would let a client get `N requests × instance
-  count` before being limited anywhere. Deferred until horizontal scaling
+count` before being limited anywhere. Deferred until horizontal scaling
   is actually in place, to avoid taking on a Redis dependency for a
   single-instance deployment.
 - **Rate limiting at the edge/gateway (Cloudflare, API Gateway, nginx)** —
