@@ -7,19 +7,21 @@ test.describe("Causal inference dashboard", () => {
       "Did the feature actually drive GMV",
     );
     await expect(page.getByTestId("summary-cards")).toBeVisible();
-    await expect(page.getByText("Naive pooled TWFE")).toBeVisible();
+    await expect(page.getByTestId("summary-cards").getByText("Naive pooled TWFE")).toBeVisible();
   });
 
   test("shows all three cohort-specific event study panels", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("Early cohort")).toBeVisible();
-    await expect(page.getByText("Mid cohort")).toBeVisible();
-    await expect(page.getByText("Late cohort")).toBeVisible();
+    await expect(page.getByText(/early cohort/i).first()).toBeVisible();
+    await expect(page.getByText(/mid cohort/i).first()).toBeVisible();
+    await expect(page.getByText(/late cohort/i).first()).toBeVisible();
   });
 
   test("renders the propensity score matching balance table", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("Propensity score matching")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Propensity score matching/i }),
+    ).toBeVisible();
     await expect(page.getByRole("cell", { name: "pre_gmv_mean" })).toBeVisible();
   });
 
